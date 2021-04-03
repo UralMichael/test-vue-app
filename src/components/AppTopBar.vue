@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="primary" dark clipped-left dense>
+  <v-app-bar app flat color="primary" dark clipped-left dense>
     <v-app-bar-nav-icon v-if="$vuetify.breakpoint.mobile"></v-app-bar-nav-icon>
     <div class="d-flex align-center">
       <v-img

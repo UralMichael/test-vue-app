@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-sm-4 pa-md-8 text-center">
+  <section class="pa-sm-4 pa-md-8 text-center">
     <h2>Данные пользователей</h2>
     <div>
       <v-data-table
@@ -36,7 +36,12 @@
           </v-tooltip>
           <v-tooltip :open-delay="500" bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-icon class="mr-2" v-bind="attrs" v-on="on">
+              <v-icon
+                class="mr-2"
+                v-bind="attrs"
+                v-on="on"
+                @click="onEditUser(item)"
+              >
                 mdi-account-edit-outline
               </v-icon>
             </template>
@@ -58,21 +63,32 @@
         </template>
       </v-data-table>
     </div>
-  </div>
+    <user-edit-dialog
+      v-model="showUserDialog"
+      :user="selectedUser"
+    ></user-edit-dialog>
+  </section>
 </template>
 
 <script>
-import { appPrompt } from "@/utils/app-prompt";
+import UserEditDialog from "@/components/UserEditDialog";
+import { appPrompt } from "@/utils/AppPrompt";
 
 export default {
-  components: {},
+  components: {
+    UserEditDialog,
+  },
   data() {
     return {
-      showDeleteDialog: false,
+      showUserDialog: false,
       search: "",
+      selectedUser: {},
       users: [
         {
           id: "1232",
+          firstName: "Иван",
+          middleName: "Иванович",
+          lastName: "Иванов",
           fullName: "Иванов Иван Иванович",
           email: "ivanov.i.i@mail.ru",
           registrationDate: 2021,
@@ -80,6 +96,9 @@ export default {
         },
         {
           id: "3332",
+          firstName: "Сан",
+          middleName: "Саныч",
+          lastName: "Петров",
           fullName: "Петров Сан Саныч",
           email: "petrov@mail.ru",
           registrationDate: 2020,
@@ -123,6 +142,10 @@ export default {
     test(item) {
       item.hidden = !item.hidden;
       console.log(item);
+    },
+    onEditUser(item) {
+      this.selectedUser = item;
+      this.showUserDialog = true;
     },
     async onDeleteUser() {
       const answer = await appPrompt(
