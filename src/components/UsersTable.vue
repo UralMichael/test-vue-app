@@ -6,6 +6,7 @@
       item-key="id"
       :search="search"
       :dense="$vuetify.breakpoint.mobile"
+      :mobile-breakpoint="0"
       :loading="loading"
       :footer-props="{
         showFirstLastPage: true,
@@ -31,6 +32,9 @@
             color="primary"
           ></v-simple-checkbox>
         </v-toolbar>
+      </template>
+      <template v-slot:item.regDate="{ item }">
+        <base-short-date-span :date="item.regDate"></base-short-date-span>
       </template>
       <template v-slot:item.hidden="{ item }">
         <v-tooltip :open-delay="500" bottom>
@@ -89,14 +93,15 @@
 
 <script>
 import { UserService } from "@/services/User";
+import BaseShortDateSpan from "@/components/BaseShortDateSpan";
 import UserEditDialog from "@/components/UserEditDialog";
 import { appPrompt } from "@/utils/AppPrompt";
-import { getShortDateString } from "@/utils/DateUtils";
 import { delay } from "@/utils/Delay";
 
 export default {
   name: "user-data-table",
   components: {
+    BaseShortDateSpan,
     UserEditDialog,
   },
   data() {
@@ -128,9 +133,9 @@ export default {
           value: "email",
         },
         {
-          text: "Дата регистрации",
+          text: "Зарегистрирован",
           sortable: true,
-          value: "regDateFormatted",
+          value: "regDate",
         },
         {
           text: "Управление",
@@ -154,7 +159,6 @@ export default {
       /* Add some computed fields for table */
       fetchedUsers.forEach((user) => {
         user.fullName = `${user.lastName} ${user.firstName} ${user.middleName}`;
-        user.regDateFormatted = getShortDateString(user.regDate);
       });
       this.users = fetchedUsers;
       this.loading = false;

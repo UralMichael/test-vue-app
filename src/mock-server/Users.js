@@ -24,7 +24,7 @@ function getRussianUser(id) {
     lastName = faker.name.lastName(gender);
   }
   const email = faker.internet.email();
-  const regDate = faker.date.past();
+  const regDate = faker.date.past().getTime();
   return {
     id,
     firstName,

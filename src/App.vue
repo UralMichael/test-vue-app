@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-resize="onResize">
     <app-top-bar></app-top-bar>
     <app-navigation-drawer></app-navigation-drawer>
     <v-main>
@@ -20,6 +20,34 @@ export default {
     AppTopBar,
     AppNavigationDrawer,
     AppPrompt,
+  },
+  beforeMount() {
+    this.setRootFont();
+  },
+  methods: {
+    setRootFont() {
+      const rootEl = document.querySelector(":root");
+      const rootFontSize = window
+        .getComputedStyle(rootEl)
+        .getPropertyValue("font-size");
+      console.log();
+      if (this.$vuetify.breakpoint.mdAndUp && rootFontSize !== "16px") {
+        rootEl.style.fontSize = "16px";
+      }
+      if (
+        !this.$vuetify.breakpoint.xs &&
+        this.$vuetify.breakpoint.smAndDown &&
+        rootFontSize !== "14px"
+      ) {
+        rootEl.style.fontSize = "14px";
+      }
+      if (this.$vuetify.breakpoint.xs && rootFontSize !== "12px") {
+        rootEl.style.fontSize = "12px";
+      }
+    },
+    onResize() {
+      this.setRootFont();
+    },
   },
 };
 </script>

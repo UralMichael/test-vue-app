@@ -33,10 +33,9 @@
                 <v-col cols="12" sm="6">
                   <span class="body-1">ID: {{ id }}</span>
                 </v-col>
-                <v-col cols="12" sm="6">
-                  <span class="body-1"
-                    >Дата регистрации: {{ registrationDate }}</span
-                  >
+                <v-col cols="12" sm="6" class="body-1">
+                  Зарегистрирован:
+                  <base-short-date-span :date="regDate"></base-short-date-span>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
@@ -110,8 +109,8 @@
 </template>
 
 <script>
+import BaseShortDateSpan from "@/components/BaseShortDateSpan";
 import Rules from "@/utils/ValidationRules";
-import { getShortDateString } from "@/utils/DateUtils";
 // import { UserService } from "@/services/User";
 import { delay } from "@/utils/Delay";
 
@@ -119,6 +118,9 @@ const EVENT_VISIBILITY = "set-user-dialog-visibility";
 
 export default {
   name: "user-edit-dialog",
+  components: {
+    BaseShortDateSpan,
+  },
   props: {
     visible: {
       type: Boolean,
@@ -154,8 +156,8 @@ export default {
     id: function () {
       return this.user.id;
     },
-    registrationDate: function () {
-      return getShortDateString(this.user.regDate);
+    regDate: function () {
+      return this.user.regDate;
     },
   },
   /* For editable fields */
