@@ -27,6 +27,7 @@
           <v-subheader>Показывать:</v-subheader>
           <v-select
             v-model="visibleType"
+            :disabled="loading"
             :items="selectType"
             item-value="key"
             item-text="text"
@@ -43,24 +44,35 @@
         <news-preview :news="item"></news-preview>
       </template>
       <template v-slot:item.mailing="{ item }">
-        <v-icon
-          :disabled="loading"
-          :color="item.mailing ? 'red' : 'green'"
-          @click="onToggleNewsMailing(item)"
-          class="mr-2"
-        >
-          {{
-            item.mailing ? "mdi-email-off-outline" : "mdi-email-send-outline"
-          }}
-        </v-icon>
-        <v-icon :disabled="loading" @click="onEditNews(item)" color="accent">
-          mdi-file-document-edit-outline
-        </v-icon>
+        <div class="news-actions">
+          <v-icon
+            :disabled="loading"
+            :color="item.mailing ? 'red' : 'green'"
+            @click="onToggleNewsMailing(item)"
+            class="mb-2"
+          >
+            {{
+              item.mailing ? "mdi-email-off-outline" : "mdi-email-send-outline"
+            }}
+          </v-icon>
+          <v-icon
+            :disabled="loading"
+            @click="onEditNews(item)"
+            color="accent"
+            class="mb-2"
+          >
+            mdi-file-document-edit-outline
+          </v-icon>
+          <v-icon :disabled="loading" @click="onDeleteNews(item)" color="red">
+            mdi-close-circle-outline
+          </v-icon>
+        </div>
       </template>
     </v-data-table>
     <news-edit-dialog
       v-model="newsDialogVisible"
       :news="selectedNews"
+      @test-news-update="onTestNewsUpdate"
     ></news-edit-dialog>
   </div>
 </template>
@@ -70,6 +82,8 @@ import BaseShortDateSpan from "@/components/BaseShortDateSpan";
 import NewsPreview from "@/components/NewsPreview";
 import NewsEditDialog from "@/components/NewsEditDialog";
 import { NewsService } from "@/services/News";
+import { delay } from "@/utils/Delay";
+import { appPrompt } from "@/utils/AppPrompt";
 
 export default {
   name: "news-table",
@@ -140,15 +154,65 @@ export default {
       this.news = await NewsService.getManyNews();
       this.loading = false;
     },
+    async onDeleteNews(passedNews) {
+      const confirmed = await appPrompt(
+        `Удалить новость (id=${passedNews.id})`,
+        "Вы действительно хотите удалить новость?"
+      );
+      if (confirmed) {
+        this.loading = true;
+        /* API call */
+        // const result = await NewsService.deleteNews(passedNews.id);
+
+        /* Отправка event в рамках ТЗ */
+        this.$emit("test-news-delete", passedNews.id);
+        await delay(1); // тестовая задержка
+        const result = true;
+
+        if (result) {
+          this.news.splice(
+            this.news.findIndex((news) => news.id === passedNews.id),
+            1
+          );
+        }
+      }
+      this.loading = false;
+    },
     async onToggleNewsMailing(news) {
-      news.mailing = !news.mailing;
+      this.loading = true;
+      /* API call */
+      // const result = NewsService.updateNews(news.id, { mailing: !news.mailing });
+
+      /* Отправка event в рамках ТЗ */
+      this.$emit("test-news-toggle-mailing", news);
+      await delay(1);
+      const result = true;
+
+      if (result) {
+        news.mailing = !news.mailing;
+      }
+      this.loading = false;
     },
     async onEditNews(news) {
       this.selectedNews = news;
       this.newsDialogVisible = true;
     },
+    onTestNewsUpdate(payload) {
+      const news = this.news.find((news) => news.id === payload.id);
+      const { title, text, imgUrl, mailing } = payload.data;
+      news.title = title;
+      news.text = text;
+      news.imgUrl = imgUrl;
+      news.mailing = mailing;
+      this.$emit("test-news-update", news);
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.news-actions {
+  display: flex;
+  flex-direction: column;
+}
+</style>

@@ -188,8 +188,7 @@ export default {
       this.loading = false;
       this.$emit(EVENT_VISIBILITY, false);
     },
-    onFileChange() {
-      console.log(this.newImage);
+    async onFileChange() {
       if (this.newImage) {
         this.imgUrl = URL.createObjectURL(this.newImage);
       }
@@ -200,9 +199,13 @@ export default {
       }
       this.showLoading();
       const newsId = this.id;
+      /* API call */
+      // const uploadedUrl = await NewsService.uploadImage(this.newImage);
+      // далее верификация загрузки
       const data = {
         title: this.title.trim(),
         text: this.text.trim(),
+        imgUrl: this.imgUrl, // должна быть новая ссылка на картинку
         mailing: this.mailing,
       };
       /* API call */

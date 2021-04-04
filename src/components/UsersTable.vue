@@ -58,7 +58,7 @@
               :disabled="loading"
               v-bind="attrs"
               v-on="on"
-              @click="onEditUser(item)"
+              @click.stop="onEditUser(item)"
               color="accent"
               class="mr-2"
             >
@@ -67,7 +67,7 @@
           </template>
           <span>Редактировать данные</span>
         </v-tooltip>
-        <v-tooltip :open-delay="500" bottom>
+        <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
               :disabled="loading"
@@ -195,7 +195,7 @@ export default {
     async onToggleUserHidden(user) {
       this.loading = true;
       /* API call */
-      // const result = UserService.updateUser(user.id, { hidden: user.hidden });
+      // const result = UserService.updateUser(user.id, { hidden: !user.hidden });
 
       /* Отправка event в рамках ТЗ */
       this.$emit("test-user-toggle-hidden", user);
