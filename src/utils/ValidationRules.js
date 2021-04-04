@@ -5,15 +5,24 @@ const NAME_LETTER_PRESENT_REGEXP = /[a-zA-Zа-яА-ЯёЁ]/;
 export default {
   Required: (value) => !!value || "Обязательное поле.",
   MinLength: (minLength) => {
-    return (value) =>
-      value.length >= minLength || "Минимальная длина строки " + minLength;
+    return (value) => {
+      if (!value?.length) return "Пустая строка";
+      return (
+        value.length >= minLength || "Минимальная длина строки " + minLength
+      );
+    };
   },
   MaxLength: (maxLength) => {
-    return (value) =>
-      value.length <= maxLength || "Максимальная длина строки " + maxLength;
+    return (value) => {
+      if (!value?.length) return "Пустая строка";
+      return (
+        value.length <= maxLength || "Максимальная длина строки " + maxLength
+      );
+    };
   },
   // TODO ref validation check if no letters
   Name: (value) => {
+    if (!value?.length) return "Пустая строка";
     return (
       (NAME_LETTER_PRESENT_REGEXP.test(value) &&
         NAME_ALLOWED_SYMBOLS_REGEXP.test(value)) ||
@@ -22,6 +31,7 @@ export default {
   },
   // TODO ref email validation
   Email: (value) => {
+    if (!value?.length) return "Пустая строка";
     return EMAIL_REGEXP.test(value) || "Неккоректный Email";
   },
 };
