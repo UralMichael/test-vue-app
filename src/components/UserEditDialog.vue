@@ -80,15 +80,19 @@
                 </v-col>
                 <v-col cols="12">
                   <v-checkbox
-                    label="Скрытый пользователь"
                     v-model="hidden"
+                    label="Скрытый пользователь"
                   ></v-checkbox>
                 </v-col>
               </v-row>
             </v-container>
-            <v-alert v-model="isError" dismissible type="error">{{
-              errorMessage
-            }}</v-alert>
+            <v-alert
+              v-model="formMessageVisible"
+              :type="formMessageType"
+              dismissible
+            >
+              {{ formMessage }}
+            </v-alert>
           </v-form>
         </v-card-text>
         <v-card-actions class="justify-center">
@@ -108,6 +112,8 @@
 <script>
 import Rules from "@/utils/ValidationRules";
 import { getShortDateString } from "@/utils/DateUtils";
+// import { UserService } from "@/services/User";
+import { delay } from "@/utils/Delay";
 
 const EVENT_VISIBILITY = "set-user-dialog-visibility";
 
@@ -135,9 +141,10 @@ export default {
       email: this.user.email,
       hidden: this.user.hidden,
       isFormValid: false,
-      isError: false,
+      formMessage: "",
+      formMessageVisible: false,
+      formMessageType: "error",
       isLoading: false,
-      errorMessage: "",
       nameRules: [Rules.Required, Rules.MaxLength(96), Rules.Name],
       emailRules: [Rules.Required, Rules.MaxLength(96), Rules.Email],
     };
@@ -148,7 +155,7 @@ export default {
       return this.user.id;
     },
     registrationDate: function () {
-      return getShortDateString(this.user.registrationDate);
+      return getShortDateString(this.user.regDate);
     },
   },
   /* For editable fields */
@@ -165,24 +172,27 @@ export default {
       }
     },
   },
-  mounted() {
-    console.log("user dialog mounted");
-  },
   methods: {
     showErrorMessage(message) {
-      this.errorMessage = message;
-      this.isError = true;
+      this.formMessage = message;
+      this.formMessageType = "error";
+      this.formMessageVisible = true;
+    },
+    showSuccessMessage() {
+      this.formMessage = "Данные обновлены";
+      this.formMessageType = "success";
+      this.formMessageVisible = true;
     },
     showLoading() {
       this.isLoading = true;
-      this.isError = false;
+      this.formMessageVisible = false;
     },
     hideLoading() {
       this.isLoading = false;
     },
     closeDialog() {
-      this.errorMessage = "";
-      this.isError = false;
+      this.formMessage = "";
+      this.formMessageVisible = false;
       this.isLoading = false;
       this.$emit(EVENT_VISIBILITY, false);
     },
@@ -191,8 +201,28 @@ export default {
         return;
       }
       this.showLoading();
-      this.showErrorMessage("Ошибка сервера");
-      this.closeDialog();
+      const userId = this.id;
+      const data = {
+        firstName: this.firstName.trim(),
+        middleName: this.middleName.trim(),
+        lastName: this.lastName.trim(),
+        email: this.email.trim(),
+        hidden: this.hidden,
+      };
+      /* API call */
+      // const response = await UserService.updateUser(userId, payload);
+
+      /* Отправка event в рамках ТЗ */
+      this.$emit("test-user-update", { id: userId, data });
+      await delay(1); // тестовая задержка
+      const response = true;
+
+      this.hideLoading();
+      if (response === true) {
+        this.showSuccessMessage();
+      } else {
+        this.showErrorMessage(response || "Ошибка сервера");
+      }
     },
     onClose() {
       this.closeDialog();

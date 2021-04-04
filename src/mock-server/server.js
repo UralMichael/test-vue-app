@@ -9,7 +9,6 @@ export function mockUpClient(client) {
   const users = new UsersDB(5);
   const mock = new MockAdapter(client);
   console.warn("using axios-mock-adapter");
-  console.log(BASE_URL + USERS_URL);
 
   mock.onGet(BASE_URL + USERS_URL).reply(async () => {
     await delay(1);

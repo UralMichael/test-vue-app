@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Users from "@/views/Users";
-import News from "@/views/News";
+import Users from "@/views/UsersPage";
+import News from "@/views/NewsPage";
 import Page404 from "@/views/Page404";
 
 Vue.use(VueRouter);
