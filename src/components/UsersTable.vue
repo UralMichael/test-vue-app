@@ -24,7 +24,7 @@
           <!--   class="mx-4"-->
           <!-- ></v-text-field>-->
           <v-spacer></v-spacer>
-          <div class="mr-2">Показывать скрытых пользователей</div>
+          <v-subheader>Показывать скрытых пользователей:</v-subheader>
           <v-simple-checkbox
             v-model="hiddenUsersVisible"
             :disabled="loading"

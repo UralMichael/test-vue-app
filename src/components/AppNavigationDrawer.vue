@@ -1,9 +1,9 @@
 <template>
   <v-navigation-drawer
-    app
-    absolute
-    :permanent="!$vuetify.breakpoint.mobile"
+    v-model="visible"
     :clipped="!$vuetify.breakpoint.mobile"
+    width="220"
+    app
   >
     <v-list dense>
       <v-list-item v-for="item in items" :key="item.title" :to="item.link">
@@ -23,6 +23,7 @@ export default {
   name: "app-navigation-drawer",
   data() {
     return {
+      visible: false,
       items: [
         { link: "/users", title: "Пользователи", icon: "mdi-account-group" },
         { link: "/news", title: "Новости", icon: "mdi-newspaper-variant" },

@@ -1,6 +1,6 @@
 <template>
-  <section class="pa-sm-4 pa-md-4">
-    <h2 class="mb-4">Данные пользователей</h2>
+  <section class="pa-sm-4 pa-md-4 text-center">
+    <h2 class="ma-2">Данные пользователей</h2>
     <user-data-table
       @test-user-delete="onTestUserDelete"
       @test-user-update="onTestUserUpdate"

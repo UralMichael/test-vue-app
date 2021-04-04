@@ -1,6 +1,6 @@
 <template>
-  <section class="pa-sm-4 pa-md-4">
-    <h1>This is a news page</h1>
+  <section class="pa-sm-4 pa-md-4 text-center">
+    <h2 class="ma-2">Новости</h2>
     <news-table
       @test-news-delete="onTestNewsDelete"
       @test-news-update="onTestNewsUpdate"

@@ -1,7 +1,9 @@
 <template>
   <v-app v-resize="onResize">
-    <app-top-bar></app-top-bar>
-    <app-navigation-drawer></app-navigation-drawer>
+    <app-top-bar
+      @toggle-drawer="$refs.appDrawer.visible = !$refs.appDrawer.visible"
+    ></app-top-bar>
+    <app-navigation-drawer ref="appDrawer"></app-navigation-drawer>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -47,6 +49,10 @@ export default {
     },
     onResize() {
       this.setRootFont();
+    },
+    onDrawerToggle() {
+      console.log("drawer toggled", this.drawerOpened);
+      this.drawerOpened = !this.drawerOpened;
     },
   },
 };

@@ -8,8 +8,8 @@ const USERS_URL = "/api/users";
 const NEWS_URL = "/api/news";
 
 export function mockUpClient(client) {
-  const users = new UsersDB(5);
-  const news = new NewsDB(10);
+  const users = new UsersDB(500);
+  const news = new NewsDB(250);
   const mock = new MockAdapter(client);
   console.warn("using axios-mock-adapter");
 
