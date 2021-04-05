@@ -7,7 +7,7 @@
           <v-progress-linear
             :active="loading"
             :indeterminate="loading"
-            color="deep-purple accent-4"
+            color="accent"
             absolute
             bottom
           ></v-progress-linear>
@@ -70,15 +70,17 @@
                     show-size
                   ></v-file-input>
                 </v-col>
+                <v-col cols="12" class="justify-center">
+                  <v-alert
+                    v-model="formMessageVisible"
+                    :type="formMessageType"
+                    dismissible
+                  >
+                    {{ formMessage }}
+                  </v-alert>
+                </v-col>
               </v-row>
             </v-container>
-            <v-alert
-              v-model="formMessageVisible"
-              :type="formMessageType"
-              dismissible
-            >
-              {{ formMessage }}
-            </v-alert>
           </v-form>
         </v-card-text>
         <v-card-actions class="justify-center">

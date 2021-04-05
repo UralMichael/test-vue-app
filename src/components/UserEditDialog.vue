@@ -12,7 +12,7 @@
           <v-progress-linear
             :active="isLoading"
             :indeterminate="isLoading"
-            color="deep-purple accent-4"
+            color="accent"
             absolute
             bottom
           ></v-progress-linear>
@@ -83,15 +83,17 @@
                     label="Скрытый пользователь"
                   ></v-checkbox>
                 </v-col>
+                <v-col cols="12">
+                  <v-alert
+                    v-model="formMessageVisible"
+                    :type="formMessageType"
+                    dismissible
+                  >
+                    {{ formMessage }}
+                  </v-alert>
+                </v-col>
               </v-row>
             </v-container>
-            <v-alert
-              v-model="formMessageVisible"
-              :type="formMessageType"
-              dismissible
-            >
-              {{ formMessage }}
-            </v-alert>
           </v-form>
         </v-card-text>
         <v-card-actions class="justify-center">
