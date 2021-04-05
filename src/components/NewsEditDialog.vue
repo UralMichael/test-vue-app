@@ -41,6 +41,8 @@
                     :rules="titleRules"
                     @click:clear="title = ''"
                     rows="2"
+                    maxlength="96"
+                    counter
                     dense
                     clearable
                     no-resize

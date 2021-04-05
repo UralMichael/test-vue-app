@@ -1,7 +1,11 @@
 <template>
   <div class="d-flex py-2">
     <v-avatar class="mr-2" :size="imgSize" tile>
-      <v-img lazy-src="@/assets/placeholder.png" :src="news.imgUrl"></v-img>
+      <v-img
+        lazy-src="@/assets/placeholder.png"
+        :src="news.imgUrl"
+        alt="news"
+      ></v-img>
     </v-avatar>
     <div>
       <h3 class="nli-title primary--text">{{ news.title }}</h3>
