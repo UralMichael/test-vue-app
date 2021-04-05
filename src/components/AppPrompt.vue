@@ -1,12 +1,13 @@
 <template>
-  <v-dialog persistent v-model="showPrompt">
+  <v-dialog persistent v-model="showPrompt" max-width="512">
     <v-card>
-      <v-card-title>{{ title }}</v-card-title>
-      <v-card-text>{{ message }}</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn @click="onBtnClick(true)">Ок</v-btn>
-        <v-btn @click="onBtnClick(false)">Отмена</v-btn>
+      <v-toolbar color="warning" dark flat dense class="mb-2">
+        <v-toolbar-title>{{ title }}</v-toolbar-title>
+      </v-toolbar>
+      <v-card-text class="body-1">{{ message }}</v-card-text>
+      <v-card-actions class="justify-center">
+        <v-btn color="warning" class="mx-4" @click="onBtnClick(true)">ОК</v-btn>
+        <v-btn class="mx-4" @click="onBtnClick(false)">Отмена</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

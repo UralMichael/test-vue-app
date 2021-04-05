@@ -1,8 +1,9 @@
 <template>
   <v-navigation-drawer
     v-model="visible"
-    :clipped="!$vuetify.breakpoint.mobile"
+    :permanent="!$vuetify.breakpoint.mobile"
     width="220"
+    clipped
     app
   >
     <v-list dense>

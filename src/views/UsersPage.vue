@@ -5,6 +5,7 @@
       @test-user-delete="onTestUserDelete"
       @test-user-update="onTestUserUpdate"
       @test-user-toggle-hidden="onTestUserToggle"
+      class="mb-2"
     ></user-data-table>
   </section>
 </template>

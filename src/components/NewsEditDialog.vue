@@ -7,9 +7,9 @@
           <v-progress-linear
             :active="loading"
             :indeterminate="loading"
+            color="deep-purple accent-4"
             absolute
             bottom
-            color="deep-purple accent-4"
           ></v-progress-linear>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="onClose">
@@ -198,21 +198,20 @@ export default {
         return;
       }
       this.showLoading();
-      const newsId = this.id;
       /* API call */
       // const uploadedUrl = await NewsService.uploadImage(this.newImage);
       // далее верификация загрузки
-      const data = {
+      const updatedData = {
         title: this.title.trim(),
         text: this.text.trim(),
         imgUrl: this.imgUrl, // должна быть новая ссылка на картинку
         mailing: this.mailing,
       };
       /* API call */
-      // const response = await NewsService.updateNews(newsId, payload);
+      // const response = await NewsService.updateNews(this.id, payload);
 
       /* Отправка event в рамках ТЗ */
-      this.$emit("test-news-update", { id: newsId, data });
+      this.$emit("test-news-update", { id: this.id, data: updatedData });
       await delay(1); // тестовая задержка
       const response = true;
 

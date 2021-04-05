@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section class="mb-4">
     <v-data-table
       :headers="headers"
       :items="news"
@@ -74,7 +74,7 @@
       :news="selectedNews"
       @test-news-update="onTestNewsUpdate"
     ></news-edit-dialog>
-  </div>
+  </section>
 </template>
 
 <script>

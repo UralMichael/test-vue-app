@@ -12,9 +12,9 @@
           <v-progress-linear
             :active="isLoading"
             :indeterminate="isLoading"
+            color="deep-purple accent-4"
             absolute
             bottom
-            color="deep-purple accent-4"
           ></v-progress-linear>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="onClose">
@@ -42,8 +42,8 @@
                     label="Имя"
                     v-model="firstName"
                     :rules="nameRules"
-                    counter
                     maxlength="96"
+                    counter
                     required
                   ></v-text-field>
                 </v-col>
@@ -52,8 +52,8 @@
                     label="Отчество"
                     v-model="middleName"
                     :rules="nameRules"
-                    counter
                     maxlength="96"
+                    counter
                     required
                   ></v-text-field>
                 </v-col>
@@ -62,8 +62,8 @@
                     label="Фамилия"
                     v-model="lastName"
                     :rules="nameRules"
-                    counter
                     maxlength="96"
+                    counter
                     required
                   ></v-text-field>
                 </v-col>
@@ -72,8 +72,8 @@
                     label="Email"
                     v-model="email"
                     :rules="emailRules"
-                    counter
                     maxlength="96"
+                    counter
                     required
                   ></v-text-field>
                 </v-col>

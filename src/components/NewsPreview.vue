@@ -29,7 +29,6 @@ export default {
       return this.$vuetify.breakpoint.mdAndUp ? 128 : 96;
     },
     textVisible: function () {
-      // console.log(this.$vuetify.breakpoint.xs);
       return this.$vuetify.breakpoint.width >= 700;
     },
     shortText: function () {

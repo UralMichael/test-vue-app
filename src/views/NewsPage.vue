@@ -5,6 +5,7 @@
       @test-news-delete="onTestNewsDelete"
       @test-news-update="onTestNewsUpdate"
       @test-news-toggle-mailing="onTestNewsToggle"
+      class="mb-2"
     ></news-table>
   </section>
 </template>
@@ -18,7 +19,7 @@ export default {
   },
   methods: {
     onTestNewsDelete(id) {
-      console.log(`Удален новость с id = ${id}`);
+      console.log(`Удалена новость с id = ${id}`);
     },
     onTestNewsUpdate(news) {
       console.log(`Обновлена новость с id = ${news.id}`);

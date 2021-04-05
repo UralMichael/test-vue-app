@@ -32,7 +32,6 @@ export default {
       const rootFontSize = window
         .getComputedStyle(rootEl)
         .getPropertyValue("font-size");
-      console.log();
       if (this.$vuetify.breakpoint.mdAndUp && rootFontSize !== "16px") {
         rootEl.style.fontSize = "16px";
       }
@@ -51,7 +50,6 @@ export default {
       this.setRootFont();
     },
     onDrawerToggle() {
-      console.log("drawer toggled", this.drawerOpened);
       this.drawerOpened = !this.drawerOpened;
     },
   },

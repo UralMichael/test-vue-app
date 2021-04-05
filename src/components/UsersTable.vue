@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section class="mb-4">
     <v-data-table
       :headers="headers"
       :items="users"
@@ -88,7 +88,7 @@
       :user="selectedUser"
       @test-user-update="onTestUserUpdate"
     ></user-edit-dialog>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -220,5 +220,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>
